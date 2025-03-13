@@ -41,7 +41,7 @@ def get_projects():
     # api_url = f'https://api.github.com/users/dmdhrumilmistry/repos'
     api_url = f'https://api.github.com/users/Abdul-Ahad9/repos'
     cards_list = requests.get(api_url).json()
-    # print(cards_list)
+    print(cards_list)
     return cards_list
 
 
