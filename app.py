@@ -7,6 +7,11 @@ from flask_migrate import Migrate, migrate
 import requests
 import re
 
+
+import os
+
+ENV_MODE = os.getenv("PORTFOLIO_ENV", "development")  # Default to 'development'
+
 # create flask app
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite3'
@@ -38,9 +43,16 @@ class Contact(db.Model):
 
 
 def get_projects():
-    # api_url = f'https://api.github.com/users/dmdhrumilmistry/repos'
     api_url = f'https://api.github.com/users/Abdul-Ahad9/repos'
-    cards_list = requests.get(api_url).json()
+    print(os.getenv("PORTFOLIO_ENV"))
+    if ENV_MODE == "production":
+        GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
+        headers = {
+        "Authorization": f"token {GITHUB_TOKEN}"
+        }
+        cards_list = requests.get(api_url, headers=headers).json() 
+    else:
+        cards_list = requests.get(api_url).json()
     print(cards_list)
     return cards_list
 
