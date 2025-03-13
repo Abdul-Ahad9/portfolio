@@ -44,7 +44,6 @@ class Contact(db.Model):
 
 def get_projects():
     api_url = f'https://api.github.com/users/Abdul-Ahad9/repos'
-    print(os.getenv("PORTFOLIO_ENV"))
     if ENV_MODE == "production":
         GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
         headers = {
@@ -53,7 +52,6 @@ def get_projects():
         cards_list = requests.get(api_url, headers=headers).json() 
     else:
         cards_list = requests.get(api_url).json()
-    print(cards_list)
     return cards_list
 
 
